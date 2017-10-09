@@ -1,0 +1,191 @@
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x61761B50 в функции SymGetLineFromAddrW64. Попытка прочесть данные по адресу 0x0409D17B. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105], Instance: 0x004F329C (32-bit), Flags: CMdrE0, Thread: 0x128C (Main), GetLastError(): 87 (Параметр задан неверно). 
+From: C:\Users\User\Desktop\TX\TXLib.h (9017) bool {anonymous}::TX::_txSymGetFromAddr(void*, {anonymous}::TX::Win32::SYMBOL_INFO**, {anonymous}::TX::Win32::IMAGEHLP_LINE64**, const char**, const char**, int).
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040E280 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txOnSignal
+# 1 0x004010F9 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!_gnu_exception_handler@4
+# 2 0x61753680 in C:\Windows\MgwHelp32.dll!SymGetLineFromAddrW64
+# 3 0x766798DA in !free
+# 4 0x61741FBF in C:\Windows\
+# 4 0x61741F
+# 5 0x00433BEE in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!__emutls_get_address
+# 6 0x00415E75 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txSymGetFromAddr
+# 7 0x00401EA5 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txFuncEntry::~_txFuncEntry
+# 8 0x00404D5E in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txCleanup
+# 9 0x00404240 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txOnExit
+#10 0x00407860 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txCanvas_ThreadProc
+#11 0x76681287 in C:\Windows\syswow64\msvcrt.dll!itow_s
+#12 0x76681328 in C:\Windows\syswow64\msvcrt.dll!endthreadex
+#13 0x76D833AA in C:\Windows\syswow64\kernel32.dll!BaseThreadInitThunk
+#14 0x77779EF2 in C:\Windows\SysWOW64\ntdll.dll!RtlInitializeExceptionChain
+#15 0x77779EC5 in C:\Windows\SysWOW64\ntdll.dll!RtlInitializeExceptionChain
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::_txSymGetFromAddr(void*, {anonymous}::TX::Win32::SYMBOL_INFO**, {anonymous}::TX::Win32::IMAGEHLP_LINE64**, const char**, const char**, int) at C:\Users\User\Desktop\TX\TXLib.h (9017):
+
+   9015: 
+   9016: $       SetLastError (0);
+=> 9017: $       (CALL_(MinGW::SymFromAddr, (process, (uintptr_t) addr, &ofs, sym)) && RES_(y)) ||
+   9018:         (CALL_(Win32::SymFromAddr, (process, (uintptr_t) addr, &ofs, sym)) && RES_(Y)) ||
+   9019:             DBG_ ("SymFromAddr (0x%p) failed", addr);
+
+# 1 in const char* {anonymous}::TX::_txCaptureStackBackTrace(int, bool, CONTEXT*, HANDLE) at C:\Users\User\Desktop\TX\TXLib.h (8819):
+
+   8817: $       bool                    inTX   = false;
+   8818: 
+=> 8819:         if (addr) { $ inTX = _txSymGetFromAddr ((char*) addr - 1, &sym, &line, &module); }
+   8820: 
+   8821:         if (readSource && !inTX) { $ _txSymGetFromAddr ((void*) 1, NULL, NULL, NULL, &source, 2); }
+
+# 2 in HDC__*& {anonymous}::TX::txDC(bool) at C:\Users\User\Desktop\TX\TXLib.h (9657):
+
+   9655: inline HDC& txDC (bool forced /*= false*/)
+   9656:     {
+=> 9657: $1  if (forced) _TX_IF_TXWINDOW_FAILED { static HDC null = NULL; return null; }
+   9658: 
+   9659: $   return _txCanvas_BackBuf[0];
+
+# 3 in bool {anonymous}::TX::txCircle(double, double, double) at C:\Users\User\Desktop\TX\TXLib.h (9878):
+
+   9876: bool txCircle (double x, double y, double r)
+   9877:     {
+=> 9878: $1  return txEllipse (x-r, y-r, x+r, y+r);
+   9879:     }
+   9880: 
+
+# 4 in void PisosPro() at D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.cpp (31):
+
+     29:                 txSetFillColor (TX_BLACK);
+     30:                 txSetColor (TX_BLACK, 2);
+=>   31:                 txCircle (400 + x*10, 300 - y*10, 2);
+     32:                 }
+     33:             }
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Dec  1 2016 10:22:27, DEBUG, GNU g++ 4.8.1, std=201103L
+Started:	Dec 01 2016 10:22:30
+
+Run file:	D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe
+Directory:	D:\Программирование\Работы\Графики неравенств\3.14SOS
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x61761B50 в функции SymGetLineFromAddrW64. Попытка прочесть данные по адресу 0x00000002. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105], Instance: 0x004F329C (32-bit), Flags: CMdrE0, Thread: 0x880 (Main), GetLastError(): 87 (Параметр задан неверно). 
+From: C:\Users\User\Desktop\TX\TXLib.h (9017) bool {anonymous}::TX::_txSymGetFromAddr(void*, {anonymous}::TX::Win32::SYMBOL_INFO**, {anonymous}::TX::Win32::IMAGEHLP_LINE64**, const char**, const char**, int).
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x617443A2 in C:\Windows\MgwHelp32.dll!SymGetLineFromAddrW64
+# 1 0x7687C455 in C:\Windows\syswow64\KERNELBASE.dll!CloseHandle
+# 2 0x61753680 in C:\Windows\MgwHelp32.dll!SymGetLineFromAddrW64
+# 3 0x766798DA in C:\Windows\syswow64\msvcrt.dll!free
+# 4 0x61741FBF in C:\Windows\MgwHelp32.dll
+# 5 0x00433BFE in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!__emutls_get_address
+# 6 0x00415E75 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txSymGetFromAddr
+# 7 0x00401EA5 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txFuncEntry::~_txFuncEntry
+# 8 0x00404D5E in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txCleanup
+# 9 0x00404240 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txOnExit
+#10 0x00407860 in D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe!(anonymous namespace)::TX::_txCanvas_ThreadProc
+#11 0x76681287 in C:\Windows\syswow64\msvcrt.dll!itow_s
+#12 0x76681328 in C:\Windows\syswow64\msvcrt.dll!endthreadex
+#13 0x76D833AA in C:\Windows\syswow64\kernel32.dll!BaseThreadInitThunk
+#14 0x77779EF2 in C:\Windows\SysWOW64\ntdll.dll!RtlInitializeExceptionChain
+#15 0x77779EC5 in C:\Windows\SysWOW64\ntdll.dll!RtlInitializeExceptionChain
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::_txSymGetFromAddr(void*, {anonymous}::TX::Win32::SYMBOL_INFO**, {anonymous}::TX::Win32::IMAGEHLP_LINE64**, const char**, const char**, int) at C:\Users\User\Desktop\TX\TXLib.h (9017):
+
+   9015: 
+   9016: $       SetLastError (0);
+=> 9017: $       (CALL_(MinGW::SymFromAddr, (process, (uintptr_t) addr, &ofs, sym)) && RES_(y)) ||
+   9018:         (CALL_(Win32::SymFromAddr, (process, (uintptr_t) addr, &ofs, sym)) && RES_(Y)) ||
+   9019:             DBG_ ("SymFromAddr (0x%p) failed", addr);
+
+# 1 in const char* {anonymous}::TX::_txCaptureStackBackTrace(int, bool, CONTEXT*, HANDLE) at C:\Users\User\Desktop\TX\TXLib.h (8819):
+
+   8817: $       bool                    inTX   = false;
+   8818: 
+=> 8819:         if (addr) { $ inTX = _txSymGetFromAddr ((char*) addr - 1, &sym, &line, &module); }
+   8820: 
+   8821:         if (readSource && !inTX) { $ _txSymGetFromAddr ((void*) 1, NULL, NULL, NULL, &source, 2); }
+
+# 2 in HDC__*& {anonymous}::TX::txDC(bool) at C:\Users\User\Desktop\TX\TXLib.h (9657):
+
+   9655: inline HDC& txDC (bool forced /*= false*/)
+   9656:     {
+=> 9657: $1  if (forced) _TX_IF_TXWINDOW_FAILED { static HDC null = NULL; return null; }
+   9658: 
+   9659: $   return _txCanvas_BackBuf[0];
+
+# 3 in bool {anonymous}::TX::txCircle(double, double, double) at C:\Users\User\Desktop\TX\TXLib.h (9878):
+
+   9876: bool txCircle (double x, double y, double r)
+   9877:     {
+=> 9878: $1  return txEllipse (x-r, y-r, x+r, y+r);
+   9879:     }
+   9880: 
+
+# 4 in void PisosPro() at D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.cpp (31):
+
+     29:                 txSetFillColor (TX_BLACK);
+     30:                 txSetColor (TX_BLACK, 2);
+=>   31:                 txCircle (400 + x*10, 300 - y*10, 2);
+     32:                 }
+     33:             }
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Dec  1 2016 10:25:54, DEBUG, GNU g++ 4.8.1, std=201103L
+Started:	Dec 01 2016 10:25:57
+
+Run file:	D:\Программирование\Работы\Графики неравенств\3.14SOS\PisosPro.exe
+Directory:	D:\Программирование\Работы\Графики неравенств\3.14SOS
+
+--------------------------------------------------

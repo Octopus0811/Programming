@@ -1,0 +1,41 @@
+
+#include "TXLib.h"
+
+void Print (int data[], int size);
+
+int main()
+    {
+    txCreateWindow (800, 600);
+
+    
+
+    Print (data, Size);
+
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+void Print (int data[], int size)
+    {
+    for (int i = 0; i < size; i++)
+        {
+        printf ("%d ", data [i]);
+        }
+    }
+
+//-----------------------------------------------------------------------------
+
+void Massive (data [], )
+    {
+    const int size = 10;
+    int data [size] = {1, 2, 3};
+
+    int i = 3;
+
+    while (i < size)
+        {
+        data [i] = data [i - 3];
+        i++;
+        }
+    }

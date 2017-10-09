@@ -1,0 +1,99 @@
+
+#include "TXLib.h"
+
+void BubbleSort (int data [], int Size);
+
+//-----------------------------------------------------------------------------
+
+int main()
+    {
+    txCreateWindow (800, 600);
+
+    
+
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+void Exchange (int data [], int Size, int a, int b)
+    {
+    int d = data [a];
+    data [a] = data [b];
+    data [b] = d;
+    }
+
+//-----------------------------------------------------------------------------
+
+void BubbleSort (int data [], int Size)
+    {
+    int swaps = 0;
+    int comparisons = 0;
+
+    while (true)
+        {
+        int i = 0;
+        int changes = 0;
+        int compares = 0;
+
+        while (i < Size - 1)
+            {
+            if (data [i]  > data [i+1])
+                {
+                Exchange (data, Size, i, i+1);
+                changes ++;
+                }
+            compares++;
+            i++;
+            }
+        swaps = swaps + changes;
+        comparisons = comparisons + compares;
+        if (changes == 0) break;
+        }
+    }
+
+//-----------------------------------------------------------------------------
+void BubbleGraph()
+	{
+	int data [256] = {};
+
+	txSetColor (TX_GREEN, 2);
+
+	int OLD_X = 0, OLD_Y = 0;
+
+
+	for (int x = 0; x < 256; x++)
+		{
+        Create (data, x);
+
+		BubbleSort (data, x);
+
+		int y = Exchanges;
+
+		txLine (OLD_X * 2 , 600 - OLD_Y * 2, x * 2, 600 - y * 2);
+
+		OLD_X = x;
+		OLD_Y = y;
+
+		}
+
+	OLD_X = 0;
+	OLD_Y = 0;
+
+	txSetColor (TX_ORANGE, 2);
+
+
+	for (int x = 0; x < 256; x++)
+        {
+        Create (data, x);
+        BubbleSort (data, x);
+
+		int y = Scans;
+
+		txLine (OLD_X * 2, 600 - OLD_Y * 2, x * 2, 600 - y * 2);
+
+		OLD_X = x;
+		OLD_Y = y;
+        }
+    while (txMouseButtons () != 1);
+    }

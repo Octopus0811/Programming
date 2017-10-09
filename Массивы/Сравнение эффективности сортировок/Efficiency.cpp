@@ -1,0 +1,206 @@
+#include "TXLib.h"
+#include "SortEfLib.h"
+
+const int BS_NONE      = 0,
+          BS_PRESSED   = 1,
+          BS_MOUSEOVER = 2;
+
+const int CMD_NONE   = 0,
+          CMD_BUBBLE = 1,
+          CMD_SLCT   = 2,
+          CMD_INSRT  = 3,
+          CMD_BINSRT = 4,
+          CMD_QKSRT  = 5,
+          CMD_CLEAR  = 6,
+          CMD_EXIT   = 7;
+
+//-----------------------------------------------------------------------------
+
+struct Button
+    {
+    int command;
+
+    const char* text;
+    //const char* helpText;
+    COLORREF ButtonColor;
+    COLORREF TextColor;
+    //COLORREF ButtonColor;
+
+    HDC dc;
+
+    int x1, y1;
+    int x2, y2;
+
+    int status;
+    };
+
+//-----------------------------------------------------------------------------
+
+void ButtonsInitAll (Button buttons[], int size, int x0, int y0, int tSizeX, int tSizeY,int buttonSizeX, int ButtonSizeY);
+
+int  RunMenu (Button buttons[], int size);
+
+void ButtonsDrawAll (const Button buttons[], int size);
+int  ButtonsTestAll (Button buttons[], int size);
+
+void ButtonDraw (const Button* button);
+int  ButtonTest (Button* button);
+
+//-----------------------------------------------------------------------------
+
+int main()
+    {
+    txDisableAutoPause ();
+    txBegin ();
+    txCreateWindow (1000, 1000);
+
+    HDC Image = txLoadImage ("graphics.basis.bmp");
+    assert (txBitBlt > 0);
+    txBitBlt (txDC (), 0, 0, 1000, 1000, Image);
+
+    txSelectFont ("Comic Sans MS", 29);
+
+    Button b[] = { { CMD_BUBBLE, "Bubble sort"            , TX_BLACK, RGB (240,0,1)  },
+                   { CMD_SLCT,   "Selection sort"         , TX_BLACK, RGB (253,128,1)},
+                   { CMD_INSRT,  "Insertion sort"         , TX_BLACK, RGB (255,255,0)},
+                   { CMD_BINSRT, "Binary Insertion sort"  , TX_BLACK, RGB (0,176,0)  },
+                   { CMD_QKSRT,  "Quick sort"             , TX_BLACK, RGB (120,150,254) },
+                   { CMD_CLEAR,  "Clear"                  , TX_BLACK, RGB (64,65,254)},
+                   { CMD_EXIT,   "Exit"                   , TX_BLACK, RGB (160,1,192)} };
+
+    ButtonsInitAll (b, sizearr (b), 770, 250, 0, 100, 210, 80);
+
+    while (!GetAsyncKeyState (VK_ESCAPE))
+        {
+        switch (RunMenu (b, sizearr (b)))
+            {
+            case CMD_NONE:   break;
+
+            case CMD_BUBBLE: BubbleGraph();
+                             break;
+
+            case CMD_SLCT:   SelectionGraph();
+                             break;
+
+            case CMD_INSRT:  InsertiononGraph();
+                             break;
+
+            case CMD_BINSRT: BinaryInsertiononGraph();
+                             break;
+
+            case CMD_QKSRT:  break;
+
+            case CMD_CLEAR:  txClear ();
+                             txBitBlt (txDC (), 0, 0, 1000, 1000, Image);
+                             break;
+
+            case CMD_EXIT:   txDeleteDC (Image);
+                             return 0;
+
+            default:         break;
+            }
+        }
+
+    txDeleteDC (Image);
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+int RunMenu (Button menu[], int size)
+    {
+    while (!GetAsyncKeyState (VK_ESCAPE))
+        {
+        txSetFillColor (TX_BLACK);
+        //txClear();
+
+        int command = ButtonsTestAll (menu, size);
+        if (command != CMD_NONE) return command;
+
+        ButtonsDrawAll (menu, size);
+
+        txSleep (50);
+        }
+
+    return CMD_NONE;
+    }
+
+//-----------------------------------------------------------------------------
+
+void ButtonsInitAll (Button buttons[], int size, int x0, int y0, int tSizeX, int tSizeY,
+                     int buttonSizeX, int buttonSizeY)
+    {
+    for (int i = 0; i < size; i++)
+        {
+        buttons[i].x1 = x0 + i * tSizeX;
+        buttons[i].y1 = y0 + i * tSizeY;
+        buttons[i].x2 = x0 + i * tSizeX + buttonSizeX;
+        buttons[i].y2 = y0 + i * tSizeY + buttonSizeY;
+        }
+    }
+
+//-----------------------------------------------------------------------------
+
+void ButtonsDrawAll (const Button buttons[], int size)
+    {
+    for (int i = 0; i < size; i++)
+        ButtonDraw (&buttons[i]);
+    }
+//-----------------------------------------------------------------------------
+
+int ButtonsTestAll (Button buttons[], int size)
+    {
+    for (int i = 0; i < size; i++)
+        if (ButtonTest (&buttons[i]) == BS_PRESSED) return buttons[i].command;
+
+    return CMD_NONE;
+    }
+
+//-----------------------------------------------------------------------------
+
+void ButtonDraw (const Button* button)
+    {
+    txSetColor (button->TextColor, 3);
+    txSetFillColor ((button->status == BS_MOUSEOVER)? TX_WHITE : button->ButtonColor);
+
+    //int hint = (button->status == BS_MOUSEOVER)? 5 : 0;
+
+    txRectangle (button->x1, button->y1, button->x2, button->y2);
+
+    /*if (button->dc)
+        txBitBlt (txDC(), button->x1, button->y1,
+                          button->x2 - button->x1, button->y2 - button->y1,
+                          button->dc);   */
+    if (button->status == BS_MOUSEOVER) txSetColor (TX_BLACK);
+
+    txDrawText (button->x1, button->y1, button->x2, button->y2, button->text);
+
+    /*if (button->status == BS_MOUSEOVER)
+        {
+        txSetColor (TX_WHITE);
+        txDrawText (0, txGetExtentY() - 30, txGetExtentX(), txGetExtentY(), button->helpText);
+        }*/
+    }
+
+//-----------------------------------------------------------------------------
+
+int ButtonTest (Button* button)
+    {
+    int mx = txMouseX(), my = txMouseY();
+
+    if (button->x1 <= mx && mx <= button->x2 &&
+        button->y1 <= my && my <= button->y2)
+        {
+        button->status = BS_MOUSEOVER;
+
+        if (txMouseButtons() == 1)
+            {
+            button->status = BS_PRESSED;
+            return BS_PRESSED;
+            }
+        }
+    else
+        button->status = BS_NONE;
+
+    return BS_NONE;
+    }

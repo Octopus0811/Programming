@@ -1,0 +1,190 @@
+#include "TXLib.h"
+
+void Print          (int data [], int Size);
+void ROL            (int data [], int first, int last);
+void ROR            (int data [], int first, int last);
+void REV            (int data [], int Size);
+void Create         (int data [], int Size);
+void BubbleSort     (int data [], int Size);
+void Exchange       (int data [], int Size, int i);
+int  Min            (int data [], int Size, int start);
+void SelectionSort  (int data [], int Size);
+void NedoQSort      (int data [], int Size);
+
+//-----------------------------------------------------------------------------
+
+int main()
+    {
+    const int Size = 20;
+    int data [Size] = {};
+
+    Create    (data, Size);
+    Print     (data, Size);
+    NedoQSort (data, Size);
+    Print     (data, Size);
+
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+void Print (int data [], int Size)
+    {
+    for (int i = 0; i < Size; i++)
+        printf ("%d ", data[i]);
+
+    printf ("\n");
+    }
+
+//-----------------------------------------------------------------------------
+
+void ROL (int data [], int first, int last)
+    {
+    int i = first;
+    int temp = data [first];
+
+    while (i < last)
+        {
+        data [i] = data [i + 1];
+        i++;
+        }
+    data [last] = temp;
+    }
+
+//-----------------------------------------------------------------------------
+
+void ROR (int data [], int first, int last)
+    {
+    int i = last;
+    int temp = data [last];
+
+    while (i > first)
+        {
+        data [i] = data [i - 1];
+        i--;
+        }
+    data [first] = temp;
+    }
+
+//-----------------------------------------------------------------------------
+
+void Create (int data [], int Size)
+    {
+    srand(time(0));
+    int i = 0;
+
+    while (i < Size)
+        {
+        data [i] = rand() % 50;
+        i++;
+        }
+    }
+
+//-----------------------------------------------------------------------------
+
+void Exchange (int data [], int Size, int a, int b)
+    {
+    int d = data [a];
+    data [a] = data [b];
+    data [b] = d;
+    }
+
+//-----------------------------------------------------------------------------
+
+void REV (int data [], int Size)
+    {
+    int i = 0;
+    while (i < Size)
+        {
+        Exchange (data, Size, i, i+1);
+        i += 2;
+        }
+    }
+
+ //-----------------------------------------------------------------------------
+
+void BubbleSort (int data [], int Size)
+    {
+    int swaps = 0;
+    int comparisons = 0;
+
+    while (true)
+        {
+        int i = 0;
+        int changes = 0;
+        int compares = 0;
+
+        while (i < Size - 1)
+            {
+            if (data [i]  > data [i+1])
+                {
+                Exchange (data, Size, i, i+1);
+                changes ++;
+                }
+            compares++;
+            i++;
+            }
+        txSleep (0);
+        swaps = swaps + changes;
+        comparisons = comparisons + compares;
+        if (changes == 0) break;
+        }
+    Print (data, Size);
+
+    printf ("\n\nПривет, я Cаймон, и я посчитал количество твоих сравнений: %d", comparisons);
+    printf ("\nНо ты настолько глупенький :DDD, что сделал вот столько обменов: %d\n", swaps);
+
+    printf ("\nВозьми с полки Нобелевскую премию по аутизму...\n\n\n\n\n");
+    }
+
+//-----------------------------------------------------------------------------
+
+int Min (int data [], int Size, int start)
+    {
+    int i = start + 1;
+    int min = 1;
+
+    while (i < Size)
+        {
+        if (data [i] < data [min])
+            {
+            min = i;
+            }
+        i++;
+        }
+    return min;
+    }
+
+//-----------------------------------------------------------------------------
+
+void SelectionSort (int data [], int Size)
+    {
+    int start = 0;
+
+    while (start < Size)
+        {
+        Exchange (data, Size, Min (data, Size, start), start);
+        start++;
+        }
+    }
+
+//-----------------------------------------------------------------------------
+
+void NedoQSort (int data [], int Size)
+    {
+    int leftcounter  = 0;
+    int rightcounter = Size - 1;
+
+    int mid = (leftcounter + rightcounter) / 2;
+    printf ("mid = %d leftcounter = %d rightcounter = %d data [mid] = ");
+    while (leftcounter < mid)
+        {
+        if (data [leftcounter] >= data [mid])
+            {
+            ROL (data, leftcounter, mid);
+            break;
+            }
+        leftcounter++;
+        }
+    }
+
