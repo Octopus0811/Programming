@@ -1,5 +1,8 @@
 
 #include "TXLib.h"
+#include "ScoreSort.h"
+
+#define GAKS(a) GetAsyncKeyState (a)
 
 struct BallType
     {
@@ -30,38 +33,41 @@ int main()
     {
     txCreateWindow (WinSizeX, WinSizeY);
 
-    txSetColor (TX_BLUE);
-    txSelectFont ("Lucida Console", 40);
-    txTextOut (900, 550, "PRESS SPACE TO STOP");
-
     txDisableAutoPause ();
     txBegin ();
 
     srand (time(0));
 
+	double dt = 0.01;
     const int BallsNum = 15;
 
     BallType MyBalls [BallsNum];
-    BallType PlayerBall;
-
-    double dt = 0.01;
 
     InitAllBalls (MyBalls , BallsNum);
 
-
-    while (!GetAsyncKeyState (VK_ESCAPE))
+	while (!GetAsyncKeyState (VK_ESCAPE))
         {
-        if (GetAsyncKeyState (VK_SPACE)) dt = 0;
-			else dt = 0.01;
+        txSetColor (TX_BLUE);
+		txSelectFont ("Comic Sans MS", 25);
+		txTextOut (797, 577, "PRESS SPACE TO STOP");
+
+        if (GAKS (VK_SPACE)) dt = 0;
+			else if (GAKS ('R') && GAKS ('E') && GAKS ('V') && GAKS ('S'))
+					{
+					dt = -0.01;
+					txSetColor (TX_RED);
+					txTextOut (202, 577, "*REVERSE*");
+					}
+				else dt = 0.01;
 
         PhysicsForAllBalls      (MyBalls, BallsNum, dt);
         DrawAllBalls            (MyBalls, BallsNum);
 		txSetFillColor(TX_WHITE);
+		DrawTable (MyBalls);
 
         txSleep (0);
 		txClear ();
         }
-
     return 0;
     }
 
@@ -86,13 +92,10 @@ void InitBall (BallType *Ball, COLORREF color)
 
 void InitAllBalls (BallType MyBalls [], int BallsNum)
     {
-    int i = 0;
-
-    while (i < BallsNum)
+    for (int i = 0; i < BallsNum; i++)
         {
         InitBall (&MyBalls [i], TX_BLUE);
         MyBalls [i].id = i;
-        i++;
         }
     }
 
@@ -174,10 +177,18 @@ void DrawTable(BallType MyBalls [])
 	{
 	for (int i = 0; i < 10; i++)
 		{
-		txSetColor (MyBalls[i].color, 3);
-		txRectangle (0, 100*i, 200, 100*i+100);
+		txSetColor (MyBalls[i].color, 4);
+		txRectangle (4, 60*i + 2, 200, 60*i + 60 - 3);
+
+		char buff [32];
+		sprintf (buff, "id = %3d, score = %3d", MyBalls[i].id, MyBalls[i].score);
+		txSelectFont ("Comic Sans MS", 25);
+		txTextOut (15, 60*i + 17, buff);
 		}
 	}
+
+//-----------------------------------------------------------------------------
+
 	/*char buff [16];
     sprintf (buff, "id = %3d, score = %3d", Ball.id, Ball.score);  */
 
