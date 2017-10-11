@@ -12,7 +12,7 @@ struct BallType
 
     COLORREF color;
     };
-
+    
 void Print          (BallType MyBalls [], int BallsNum);
 void Create         (BallType MyBalls [], int BallsNum);
 void Exchange       (BallType MyBalls [], int BallsNum,  int a, int b);
@@ -21,7 +21,7 @@ void SelectionSort  (BallType MyBalls [], int BallsNum);
 
 //-----------------------------------------------------------------------------
 
-void Print (BallType MyBalls [], int BallsNum)
+void Print (BallType MyBalls [], int Size)
     {
     printf ("Massive: ");
     for (int i = 0; i < BallsNum; i++)
@@ -33,7 +33,7 @@ void Print (BallType MyBalls [], int BallsNum)
 
 //-----------------------------------------------------------------------------
 
-/*void Create (BallType MyBalls [], int BallsNum)
+void Create (BallType MyBalls [], int BallsNum)
     {
     srand(time(0));
     int i = 0;
@@ -43,7 +43,7 @@ void Print (BallType MyBalls [], int BallsNum)
         MyBalls [i] = random(1, 1000);
         i++;
         }
-    } */
+    }
 
 //-----------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ int Max (BallType MyBalls [], int BallsNum, int start)
 
     while (i < BallsNum)
         {
-        if (MyBalls [i].score > MyBalls [max].score)
+        if (MyBalls [i].scor > MyBalls [max])
             {
             max = i;
             }

@@ -3,7 +3,7 @@
 #include "ScoreSort.h"
 
 #define GAKS(a) GetAsyncKeyState (a)
-
+        /*
 struct BallType
     {
     double x, y;
@@ -14,7 +14,7 @@ struct BallType
     int score;
 
     COLORREF color;
-    };
+    };*/
 
 void InitBall               (BallType *Ball, COLORREF color);
 void InitAllBalls           (BallType MyBalls [], int BallsNum);
@@ -26,6 +26,7 @@ void DrawAllBalls           (BallType MyBalls[], int BallsNum);
 void DrawTable				(BallType MyBalls []);
 
 const int WinSizeX = 1000, WinSizeY= 600;
+double dt = 0.01;
 
 //-----------------------------------------------------------------------------
 
@@ -38,7 +39,6 @@ int main()
 
     srand (time(0));
 
-	double dt = 0.01;
     const int BallsNum = 15;
 
     BallType MyBalls [BallsNum];
@@ -63,6 +63,8 @@ int main()
         PhysicsForAllBalls      (MyBalls, BallsNum, dt);
         DrawAllBalls            (MyBalls, BallsNum);
 		txSetFillColor(TX_WHITE);
+
+		SelectionSort (MyBalls, BallsNum);
 		DrawTable (MyBalls);
 
         txSleep (0);
@@ -103,28 +105,32 @@ void InitAllBalls (BallType MyBalls [], int BallsNum)
 
  void Physics (BallType *Ball, double dt)
     {
-    Ball->x= Ball->x + Ball->vx * dt;
-    Ball->y= Ball->y + Ball->vy * dt;
+    Ball->x = Ball->x + Ball->vx * dt;
+    Ball->y = Ball->y + Ball->vy * dt;
 
     if (Ball->x + Ball->r > WinSizeX)
         {
         Ball->vx = -Ball->vx;
-        Ball->x = WinSizeX - Ball -> r;
+        Ball->x = WinSizeX - Ball->r;
+        Ball->score ++;
         }
     if (Ball->y + Ball->r > WinSizeY)
         {
         Ball->vy = -Ball->vy;
-        Ball->y = WinSizeY - Ball -> r;
+        Ball->y = WinSizeY - Ball->r;
+        Ball->score ++;
         }
     if (Ball->x - Ball->r < 200)
         {
         Ball->vx = -Ball->vx;
-        Ball->x = Ball -> r + 200;
+        Ball->x = Ball->r + 200;
+        Ball->score ++;
         }
     if (Ball->y - Ball->r < 0)
         {
         Ball->vy = -Ball->vy;
-        Ball->y = Ball -> r;
+        Ball->y = Ball->r;
+        Ball->score ++;
         }
     }
 
@@ -188,9 +194,6 @@ void DrawTable(BallType MyBalls [])
 	}
 
 //-----------------------------------------------------------------------------
-
-	/*char buff [16];
-    sprintf (buff, "id = %3d, score = %3d", Ball.id, Ball.score);  */
 
 //-----------------------------------------------------------------------------
 
