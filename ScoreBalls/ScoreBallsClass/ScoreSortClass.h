@@ -18,6 +18,23 @@ class BallClass
 	void DrawBall ();
 	};
 
+class Manager
+	{
+	public:
+
+	BallClass MyBalls_ [1000];
+	int BallsNum_;
+
+	Manager ();
+
+	void PhysicsForAllBalls ();
+	void DrawAllBalls  ();
+	void AddId ();
+	void DrawTable ();
+	void SelectionSort ();
+	void Run ();
+	};
+
 void Print          (BallClass MyBalls [], int BallsNum);
 void Create         (BallClass MyBalls [], int BallsNum);
 void Exchange       (BallClass MyBalls [], int BallsNum,  int a, int b);
@@ -35,20 +52,6 @@ void Print (BallClass MyBalls [], int BallsNum)
         }
     printf ("\n");
     }
-
-//-----------------------------------------------------------------------------
-
-/*void Create (BallClass MyBalls [], int BallsNum)
-    {
-    srand(time(0));
-    int i = 0;
-
-    while (i < BallsNum)
-        {
-        MyBalls [i] = random(1, 1000);
-        i++;
-        }
-    } */
 
 //-----------------------------------------------------------------------------
 
@@ -79,13 +82,13 @@ int Max (BallClass MyBalls [], int BallsNum, int start)
 
 //-----------------------------------------------------------------------------
 
-void SelectionSort (BallClass MyBalls [], int BallsNum)
+void Manager::SelectionSort ()
     {
     int start = 0;
 
     while (start < 10)
         {
-        Exchange (MyBalls, BallsNum, Max (MyBalls, BallsNum, start), start);
+        Exchange (MyBalls_, BallsNum_, Max (MyBalls_, BallsNum_, start), start);
         start++;
         }
     }

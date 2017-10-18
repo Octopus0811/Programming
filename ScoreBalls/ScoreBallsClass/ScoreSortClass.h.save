@@ -1,57 +1,76 @@
 
 #include "TXLib.h"
 
-void Print          (BallType MyBalls [], int BallsNum);
-void Create         (BallType MyBalls [], int BallsNum);
-void Exchange       (BallType MyBalls [], int BallsNum,  int a, int b);
-int  Max            (BallType MyBalls [], int BallsNum,  int start);
-void SelectionSort  (BallType MyBalls [], int BallsNum);
+class BallClass
+	{
+	public:
+
+	double x_, y_;
+	double vx_, vy_;
+	int r_;
+
+	BallClass ();
+
+	int id_, score_;
+	COLORREF color_;
+
+	void Physics ();
+	void DrawBall ();
+	};
+
+class Manager
+	{
+	public:
+
+	BallClass MyBalls_ [1000];
+	int BallsNum_;
+
+	Manager ();
+
+	void PhysicsForAllBalls ();
+	void DrawAllBalls  ();
+	void AddId ();
+	void DrawTable ();
+	void SelectionSort ();
+	};
+
+void Print          (BallClass MyBalls [], int BallsNum);
+void Create         (BallClass MyBalls [], int BallsNum);
+void Exchange       (BallClass MyBalls [], int BallsNum,  int a, int b);
+int  Max            (BallClass MyBalls [], int BallsNum,  int start);
+void SelectionSort  (BallClass MyBalls [], int BallsNum);
 
 //-----------------------------------------------------------------------------
 
-void Print (BallType MyBalls [], int BallsNum)
+void Print (BallClass MyBalls [], int BallsNum)
     {
     printf ("Massive: ");
     for (int i = 0; i < BallsNum; i++)
         {
-        printf ("%d ", MyBalls[i].score);
+        printf ("%d ", MyBalls[i].score_);
         }
     printf ("\n");
     }
 
 //-----------------------------------------------------------------------------
 
-/*void Create (BallType MyBalls [], int BallsNum)
+void Exchange (BallClass MyBalls [], int BallsNum, int a, int b)
     {
-    srand(time(0));
-    int i = 0;
-
-    while (i < BallsNum)
-        {
-        MyBalls [i] = random(1, 1000);
-        i++;
-        }
-    } */
-
-//-----------------------------------------------------------------------------
-
-void Exchange (BallType MyBalls [], int BallsNum, int a, int b)
-    {
-    BallType temp = MyBalls [a];
+    BallClass temp = MyBalls [a];
     MyBalls [a] = MyBalls [b];
     MyBalls [b] = temp;
     }
 
 //-----------------------------------------------------------------------------
 
-int Max (BallType MyBalls [], int BallsNum, int start)
+int Max (BallClass MyBalls [], int BallsNum, int start)
     {
     int i = start + 1;
     int max = start;
 
     while (i < BallsNum)
         {
-        if (MyBalls [i].score > MyBalls [max].score)
+        if (MyBalls [i].score_ > MyBalls [max].score_)
             {
             max = i;
             }
@@ -62,13 +81,13 @@ int Max (BallType MyBalls [], int BallsNum, int start)
 
 //-----------------------------------------------------------------------------
 
-void SelectionSort (BallType MyBalls [], int BallsNum)
+void Manager::SelectionSort ()
     {
     int start = 0;
 
     while (start < 10)
         {
-        Exchange (MyBalls, BallsNum, Max (MyBalls, BallsNum, start), start);
+        Exchange (MyBalls_, BallsNum, Max (MyBalls, BallsNum, start), start);
         start++;
         }
     }

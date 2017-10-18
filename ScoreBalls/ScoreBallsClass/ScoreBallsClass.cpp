@@ -4,12 +4,42 @@
 
 #define GAKS(a) GetAsyncKeyState (a)
 
-void AddId                  (BallClass MyBalls [], int BallsNum);
-void PhysicsForAllBalls   	(BallClass MyBalls [], int BallsNum);
+/*
+class BallClass
+	{
+	public:
 
-void DrawAllBalls           (BallClass MyBalls [], int BallsNum);
+	double x_, y_;
+	double vx_, vy_;
+	int r_;
 
-void DrawTable				(BallClass MyBalls []);
+	BallClass ();
+
+	int id_, score_;
+	COLORREF color_;
+
+	void Physics ();
+	void DrawBall ();
+	};
+
+
+class Manager
+	{
+	public:
+
+	BallClass MyBalls_ [1000];
+	int BallsNum_;
+
+	Manager ();
+
+	void PhysicsForAllBalls ();
+	void DrawAllBalls  ();
+	void AddId ();
+	void DrawTable ();
+	};
+*/
+
+void Time     ();
 
 const int WinSizeX = 1000, WinSizeY= 600;
 double dt = 0.01;
@@ -23,33 +53,17 @@ int main()
     txBegin ();
 	srand (time(0));
 
-    const int BallsNum = 15;
+    Manager Manager;
 
-    BallClass MyBalls [BallsNum];
-
-    AddId (MyBalls, BallsNum);
+    Manager.AddId ();
 
 	while (!GetAsyncKeyState (VK_ESCAPE))
         {
-        txSetColor (TX_BLUE);
-		txSelectFont ("Comic Sans MS", 25);
-		txTextOut (797, 577, "PRESS SPACE TO STOP");
+        Time ();
 
-        if (GAKS (VK_SPACE)) dt = 0;
-			else if (GAKS ('R') && GAKS ('E') && GAKS ('V') && GAKS ('S'))
-					{
-					dt = -0.01;
-					txSetColor (TX_RED);
-					txTextOut (202, 577, "*REVERSE*");
-					}
-				else dt = 0.01;
+        Manager.Run ();
 
-        PhysicsForAllBalls      (MyBalls, BallsNum);
-        DrawAllBalls            (MyBalls, BallsNum);
-
-		SelectionSort (MyBalls, BallsNum);
-		DrawTable (MyBalls);
-
+        txSetFillColor (RGB(255, 210, 210));
         txSleep (0);
 		txClear ();
         }
@@ -58,29 +72,56 @@ int main()
 
 //-----------------------------------------------------------------------------
 
-BallClass::BallClass ():
+void Time ()
+	{
+	txClearConsole ();
+	txSetColor (TX_BLUE);
+	txSelectFont ("Comic Sans MS", 25);
+	txTextOut (797, 577, "PRESS SPACE TO STOP");
 
-	x_(random(0, WinSizeX)),
-    y_(random(0, WinSizeY)),
-
-    vx_(random(-300, 300)),
-    vy_(random(-300, 300)),
-
-    r_(random(30, 40)),
-
-    color_((RGB (rand()%200, rand()%200, rand()%200))),
-
-    score_(0)
-	{}
-
+	if (GAKS (VK_SPACE)) dt = 0;
+				else if (GetAsyncKeyState ('R') /*&& GAKS ('E') && GAKS ('V') && GAKS ('S')*/)
+						{
+						dt = -0.01;
+						txSetColor (TX_RED);
+						txTextOut (202, 577, "*REVERSE*");
+						}
+					else dt = 0.01;
+	}
 
 //-----------------------------------------------------------------------------
 
-void AddId (BallClass MyBalls [], int BallsNum)
+BallClass::BallClass ():
+
+	x_ (random(0, WinSizeX)),
+    y_ (random(0, WinSizeY)),
+
+    vx_ (random(-300, 300)),
+    vy_ (random(-300, 300)),
+
+    r_ (random(30, 40)),
+
+    color_ ((RGB (rand()%200, rand()%220, rand()%220))),
+
+	id_    (0),
+    score_ (0)
+	{}
+
+//-----------------------------------------------------------------------------
+
+Manager::Manager ():
+
+	MyBalls_  ({}),
+	BallsNum_ (15)
+	{}
+
+//-----------------------------------------------------------------------------
+
+void Manager::AddId ()
 	{
-	for (int i = 0; i< BallsNum; i++)
+	for (int i = 0; i< BallsNum_; i++)
 		{
-		MyBalls[i].id_ = i;
+		MyBalls_[i].id_ = i;
 		}
 	}
 
@@ -119,13 +160,13 @@ void AddId (BallClass MyBalls [], int BallsNum)
 
 //-----------------------------------------------------------------------------
 
-void PhysicsForAllBalls (BallClass MyBalls [], int BallsNum)
+void Manager::PhysicsForAllBalls ()
     {
     int i = 0;
 
-    while (i < BallsNum)
+    while (i < BallsNum_)
         {
-        MyBalls[i].Physics ();
+        MyBalls_[i].Physics ();
         i++;
         }
     }
@@ -137,6 +178,7 @@ void BallClass::DrawBall ()
     txSetFillColor  (TX_WHITE);
 
     txSetColor      (color_, 4);
+    txSetFillColor (RGB(255, 235, 235));
 
     txCircle(x_, y_, r_);
 
@@ -149,31 +191,44 @@ void BallClass::DrawBall ()
 
 //-----------------------------------------------------------------------------
 
-void DrawAllBalls (BallClass MyBalls[], int BallsNum)
+void Manager::DrawAllBalls ()
     {
     int i = 0;
 
-    while (i < BallsNum)
+    while (i < BallsNum_)
         {
-        MyBalls[i].DrawBall ();
+        MyBalls_[i].DrawBall ();
         i++;
         }
     }
 
 //-----------------------------------------------------------------------------
 
-void DrawTable(BallClass MyBalls [])
+void Manager::DrawTable()
 	{
 	for (int i = 0; i < 10; i++)
 		{
-		txSetColor (MyBalls[i].color_, 4);
+		txSetColor (MyBalls_[i].color_, 4);
+		txSetFillColor (RGB(255, 255, 255));
+
 		txRectangle (4, 60*i + 2, 200, 60*i + 60 - 3);
 
 		char buff [32];
-		sprintf (buff, "id = %3d, score = %3d", MyBalls[i].id_, MyBalls[i].score_);
+		sprintf (buff, "id = %3d, score = %3d", MyBalls_[i].id_, MyBalls_[i].score_);
 		txSelectFont ("Comic Sans MS", 25);
 		txTextOut (15, 60*i + 17, buff);
 		}
+	}
+
+//-----------------------------------------------------------------------------
+
+void Manager::Run ()
+	{
+	PhysicsForAllBalls 	();
+	DrawAllBalls       	();
+
+	SelectionSort 		();
+	DrawTable 			();
 	}
 
 //-----------------------------------------------------------------------------
