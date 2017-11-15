@@ -1,0 +1,456 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\ScoreBallsClass\ScoreBallsClass.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0042A037 в функции DrawTable() в файле D:/ScoreBallsClass/ScoreBallsClass.cpp на строке 211. Попытка прочесть данные по адресу 0x0AB26D14. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 105], Instance: 0x005022C0 (32-bit), Flags: CMdRE0, Thread: 0x12CC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0042A037 in D:\ScoreBallsClass\ScoreBallsClass.exe: DrawTable() at D:/ScoreBallsClass/ScoreBallsClass.cpp (211):
+
+    209: 	for (int i = 0; i < (BallsNum_ < 10)? BallsNum_: 10; i++)
+    210: 		{
+=>  211: 		txSetColor (MyBalls_[i].color_, 4);
+    212: 		txSetFillColor (RGB(255, 255, 255));
+    213: 
+
+# 1 0x0042A27D in D:\ScoreBallsClass\ScoreBallsClass.exe: Run() at D:/ScoreBallsClass/ScoreBallsClass.cpp (231):
+
+    229: 
+    230: 	SelectionSort 		();
+=>  231: 	DrawTable 			();
+    232: 	}
+    233: 
+
+# 2 0x0042706B in D:\ScoreBallsClass\ScoreBallsClass.exe: main() at D:/ScoreBallsClass/ScoreBallsClass.cpp (64):
+
+     62:         Time ();
+     63: 
+=>   64:         Manager.Run ();
+     65: 
+     66:         txSetFillColor (RGB(255, 210, 210));
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in void Manager::DrawTable() at D:\ScoreBallsClass\ScoreBallsClass.cpp (211):
+
+    209: 	for (int i = 0; i < (BallsNum_ < 10)? BallsNum_: 10; i++)
+    210: 		{
+=>  211: 		txSetColor (MyBalls_[i].color_, 4);
+    212: 		txSetFillColor (RGB(255, 255, 255));
+    213: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Oct 19 2017 09:19:48, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 19 2017 09:19:54
+
+Run file:	D:\ScoreBallsClass\ScoreBallsClass.exe
+Directory:	D:\ScoreBallsClass
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\ScoreBallsClass\ScoreBallsClass.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0042A037 в функции DrawTable() в файле D:/ScoreBallsClass/ScoreBallsClass.cpp на строке 211. Попытка прочесть данные по адресу 0x0AB26D14. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105], Instance: 0x005022C0 (32-bit), Flags: CMdRE0, Thread: 0x12CC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0042A037 in D:\ScoreBallsClass\ScoreBallsClass.exe: DrawTable() at D:/ScoreBallsClass/ScoreBallsClass.cpp (211):
+
+    209: 	for (int i = 0; i < (BallsNum_ < 10)? BallsNum_: 10; i++)
+    210: 		{
+=>  211: 		txSetColor (MyBalls_[i].color_, 4);
+    212: 		txSetFillColor (RGB(255, 255, 255));
+    213: 
+
+# 1 0x0042A27D in D:\ScoreBallsClass\ScoreBallsClass.exe: Run() at D:/ScoreBallsClass/ScoreBallsClass.cpp (231):
+
+    229: 
+    230: 	SelectionSort 		();
+=>  231: 	DrawTable 			();
+    232: 	}
+    233: 
+
+# 2 0x0042706B in D:\ScoreBallsClass\ScoreBallsClass.exe: main() at D:/ScoreBallsClass/ScoreBallsClass.cpp (64):
+
+     62:         Time ();
+     63: 
+=>   64:         Manager.Run ();
+     65: 
+     66:         txSetFillColor (RGB(255, 210, 210));
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in void Manager::DrawTable() at D:\ScoreBallsClass\ScoreBallsClass.cpp (211):
+
+    209: 	for (int i = 0; i < (BallsNum_ < 10)? BallsNum_: 10; i++)
+    210: 		{
+=>  211: 		txSetColor (MyBalls_[i].color_, 4);
+    212: 		txSetFillColor (RGB(255, 255, 255));
+    213: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Oct 19 2017 09:19:48, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 19 2017 09:19:55
+
+Run file:	D:\ScoreBallsClass\ScoreBallsClass.exe
+Directory:	D:\ScoreBallsClass
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\ScoreBallsClass\ScoreBallsClass.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00427962 в функции Physics() в файле D:/ScoreBallsClass/ScoreBallsClass.cpp на строке 147. Попытка записать данные по адресу 0x00290000. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 105], Instance: 0x005002C0 (32-bit), Flags: CMdRE0, Thread: 0xA74 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00427962 in D:\ScoreBallsClass\ScoreBallsClass.exe: Physics() at D:/ScoreBallsClass/ScoreBallsClass.cpp (147):
+
+    145:     {
+    146:     x_ = x_ + vx_ * dt;
+=>  147:     y_ = y_ + vy_ * dt;
+    148: 
+    149:     if (x_ + r_ > WinSizeX)
+
+# 1 0x00427AE0 in D:\ScoreBallsClass\ScoreBallsClass.exe: PhysicsForAllBalls() at D:/ScoreBallsClass/ScoreBallsClass.cpp (183):
+
+    181:     while (i < BallsNum_)
+    182:         {
+=>  183:         MyBalls_[i].Physics ();
+    184:         i++;
+    185:         }
+
+# 2 0x00428057 in D:\ScoreBallsClass\ScoreBallsClass.exe: Run() at D:/ScoreBallsClass/ScoreBallsClass.cpp (257):
+
+    255: void Manager::Run ()
+    256: 	{
+=>  257: 	PhysicsForAllBalls 	();
+    258: 	DrawAllBalls       	();
+    259: 
+
+# 3 0x0042706C in D:\ScoreBallsClass\ScoreBallsClass.exe: main() at D:/ScoreBallsClass/ScoreBallsClass.cpp (64):
+
+     62:         Time ();
+     63: 
+=>   64:         Manager.Run ();
+     65: 
+     66:         txSetFillColor (RGB(255, 210, 210));
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in void Time() at D:\ScoreBallsClass\ScoreBallsClass.cpp (80):
+
+     78: 	txSetColor (TX_BLUE);
+     79: 	txSelectFont ("Comic Sans MS", 25);
+=>   80: 	txTextOut (797, 577, "PRESS SPACE TO STOP");
+     81: 
+     82: 	if (GAKS (VK_SPACE)) dt = 0;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Oct 19 2017 10:29:47, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 19 2017 10:29:53
+
+Run file:	D:\ScoreBallsClass\ScoreBallsClass.exe
+Directory:	D:\ScoreBallsClass
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\ScoreBallsClass\ScoreBallsClass.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#16: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу NULL. Попытка прочесть данные по адресу NULL. Также превышен лимит фатальных исключений _TX_FATAL_EXCEPTIONS_LIMIT (16). Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции _set_se_translator() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105], Instance: 0x005002C0 (32-bit), Flags: CMdRE0, Thread: 0xA74 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 1 0x775BB459 in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+# 2 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+# 3 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+# 4 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+# 5 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+# 6 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+# 7 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+# 8 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+# 9 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#10 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#11 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#12 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#13 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#14 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#15 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#16 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#17 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#18 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#19 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#20 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#21 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#22 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#23 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#24 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#25 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#26 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#27 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#28 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#29 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+#30 0x775BB42B in C:\Windows\SysWOW64\ntdll.dll: LdrRemoveLoadAsDataTable()
+#31 0x77570133 in C:\Windows\SysWOW64\ntdll.dll: KiUserExceptionDispatcher()
+
+#32 0x00427AE0 in D:\ScoreBallsClass\ScoreBallsClass.exe: PhysicsForAllBalls() at D:/ScoreBallsClass/ScoreBallsClass.cpp (183):
+
+    181:     while (i < BallsNum_)
+    182:         {
+=>  183:         MyBalls_[i].Physics ();
+    184:         i++;
+    185:         }
+
+#33 0x00428057 in D:\ScoreBallsClass\ScoreBallsClass.exe: Run() at D:/ScoreBallsClass/ScoreBallsClass.cpp (257):
+
+    255: void Manager::Run ()
+    256: 	{
+=>  257: 	PhysicsForAllBalls 	();
+    258: 	DrawAllBalls       	();
+    259: 
+
+#34 0x0042706C in D:\ScoreBallsClass\ScoreBallsClass.exe: main() at D:/ScoreBallsClass/ScoreBallsClass.cpp (64):
+
+     62:         Time ();
+     63: 
+=>   64:         Manager.Run ();
+     65: 
+     66:         txSetFillColor (RGB(255, 210, 210));
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in void Time() at D:\ScoreBallsClass\ScoreBallsClass.cpp (80):
+
+     78: 	txSetColor (TX_BLUE);
+     79: 	txSelectFont ("Comic Sans MS", 25);
+=>   80: 	txTextOut (797, 577, "PRESS SPACE TO STOP");
+     81: 
+     82: 	if (GAKS (VK_SPACE)) dt = 0;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Oct 19 2017 10:29:47, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 19 2017 10:29:53
+
+Run file:	D:\ScoreBallsClass\ScoreBallsClass.exe
+Directory:	D:\ScoreBallsClass
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\ScoreBallsClass\ScoreBallsClass.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00429D86 в функции AddId() в файле D:/ScoreBallsClass/ScoreBallsClass.cpp на строке 164. Попытка записать данные по адресу 0x7FB942BC. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 105], Instance: 0x005022C0 (32-bit), Flags: CMdRE0, Thread: 0xC0C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00429D86 in D:\ScoreBallsClass\ScoreBallsClass.exe: AddId() at D:/ScoreBallsClass/ScoreBallsClass.cpp (164):
+
+    162: void Manager::AddId (int number)
+    163: 	{
+=>  164:     MyBalls_[number].id_ = number;
+    165: 	}
+    166: 
+
+# 1 0x0042A47C in D:\ScoreBallsClass\ScoreBallsClass.exe: BallsCounter() at D:/ScoreBallsClass/ScoreBallsClass.cpp (279):
+
+    277:         {
+    278:         BallsNum_++;
+=>  279:         AddId (BallsNum_ - 1);
+    280:         MyBalls_ [BallsNum_].ConstructNew ();
+    281:         }
+
+# 2 0x0042A561 in D:\ScoreBallsClass\ScoreBallsClass.exe: Run() at D:/ScoreBallsClass/ScoreBallsClass.cpp (299):
+
+    297: 	SelectionSort 		();
+    298: 	DrawTable 			();
+=>  299: 	BallsCounter        ();
+    300: 	}
+    301: 
+
+# 3 0x00427066 in D:\ScoreBallsClass\ScoreBallsClass.exe: main() at D:/ScoreBallsClass/ScoreBallsClass.cpp (69):
+
+     67:         Time ();
+     68: 
+=>   69:         Manager.Run ();
+     70: 
+     71:         txSetFillColor (RGB(255, 210, 210));
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in void Time() at D:\ScoreBallsClass\ScoreBallsClass.cpp (85):
+
+     83: 	txSetColor (TX_BLUE);
+     84: 	txSelectFont ("Comic Sans MS", 25);
+=>   85: 	txTextOut (797, 577, "PRESS SPACE TO STOP");
+     86: 
+     87: 	if (GAKS (VK_SPACE)) dt = 0;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Oct 26 2017 10:25:12, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 26 2017 10:25:19
+
+Run file:	D:\ScoreBallsClass\ScoreBallsClass.exe
+Directory:	D:\ScoreBallsClass
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\ScoreBallsClass\ScoreBallsClass.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00429D86 в функции AddId() в файле D:/ScoreBallsClass/ScoreBallsClass.cpp на строке 164. Попытка записать данные по адресу 0x7FB942BC. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105], Instance: 0x005022C0 (32-bit), Flags: CMdRE0, Thread: 0xC0C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00429D86 in D:\ScoreBallsClass\ScoreBallsClass.exe: AddId() at D:/ScoreBallsClass/ScoreBallsClass.cpp (164):
+
+    162: void Manager::AddId (int number)
+    163: 	{
+=>  164:     MyBalls_[number].id_ = number;
+    165: 	}
+    166: 
+
+# 1 0x0042A47C in D:\ScoreBallsClass\ScoreBallsClass.exe: BallsCounter() at D:/ScoreBallsClass/ScoreBallsClass.cpp (279):
+
+    277:         {
+    278:         BallsNum_++;
+=>  279:         AddId (BallsNum_ - 1);
+    280:         MyBalls_ [BallsNum_].ConstructNew ();
+    281:         }
+
+# 2 0x0042A561 in D:\ScoreBallsClass\ScoreBallsClass.exe: Run() at D:/ScoreBallsClass/ScoreBallsClass.cpp (299):
+
+    297: 	SelectionSort 		();
+    298: 	DrawTable 			();
+=>  299: 	BallsCounter        ();
+    300: 	}
+    301: 
+
+# 3 0x00427066 in D:\ScoreBallsClass\ScoreBallsClass.exe: main() at D:/ScoreBallsClass/ScoreBallsClass.cpp (69):
+
+     67:         Time ();
+     68: 
+=>   69:         Manager.Run ();
+     70: 
+     71:         txSetFillColor (RGB(255, 210, 210));
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in void Time() at D:\ScoreBallsClass\ScoreBallsClass.cpp (85):
+
+     83: 	txSetColor (TX_BLUE);
+     84: 	txSelectFont ("Comic Sans MS", 25);
+=>   85: 	txTextOut (797, 577, "PRESS SPACE TO STOP");
+     86: 
+     87: 	if (GAKS (VK_SPACE)) dt = 0;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library) - TXLib [Ver: 00173a, Rev: 105]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\User\Desktop\TX\TXLib.h
+Compiled:	Oct 26 2017 10:25:12, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 26 2017 10:25:18
+
+Run file:	D:\ScoreBallsClass\ScoreBallsClass.exe
+Directory:	D:\ScoreBallsClass
+
+--------------------------------------------------

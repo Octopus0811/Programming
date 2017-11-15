@@ -14,6 +14,7 @@ class BallClass
 	int r_;
 
 	BallClass ();
+   ~BallClass ();
 
 	int id_, score_;
 	COLORREF color_;
@@ -33,9 +34,13 @@ class Manager
 	Manager ();
 
 	void PhysicsForAllBalls ();
-	void DrawAllBalls  ();
-	void AddId ();
-	void DrawTable ();
+	void DrawAllBalls       ();
+	void AddId              (int number);
+	void AddIdAll           ();
+	void DrawTable          ();
+	void SelectionSort      ();
+	void BallsCounter       ();
+	void Run                ();
 	};
 */
 
@@ -55,7 +60,7 @@ int main()
 
     Manager Manager;
 
-    Manager.AddId ();
+    Manager.AddIdAll ();
 
 	while (!GetAsyncKeyState (VK_ESCAPE))
         {
@@ -107,6 +112,25 @@ BallClass::BallClass ():
     score_ (0)
 	{}
 
+
+//-----------------------------------------------------------------------------
+
+void BallClass::ConstructNew ()
+    {
+	x_ = (random(0, WinSizeX));
+    y_ = (random(0, WinSizeY));
+
+    vx_ = (random(-300, 300));
+    vy_ = (random(-300, 300));
+
+    r_ = (random(30, 40));
+
+    color_ = ((RGB (rand()%200, rand()%220, rand()%220)));
+
+	id_    = (0);
+    score_ = (0);
+	}
+
 //-----------------------------------------------------------------------------
 
 Manager::Manager ():
@@ -117,43 +141,68 @@ Manager::Manager ():
 
 //-----------------------------------------------------------------------------
 
-void Manager::AddId ()
+BallClass::~BallClass ()
+    {
+    x_ = 0;
+    y_ = 0;
+
+    vx_ = 0;
+    vy_ = 0;
+
+    r_ = 0;
+
+    color_ = 0;
+
+	id_   = 0;
+    score_ = 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+void Manager::AddId (int number)
 	{
-	for (int i = 0; i< BallsNum_; i++)
-		{
-		MyBalls_[i].id_ = i;
-		}
+    MyBalls_[number].id_ = number;
 	}
 
 //-----------------------------------------------------------------------------
 
- void BallClass::Physics ()
+void Manager::AddIdAll ()
+    {
+    for (int i = 0; i < BallsNum_; i++)
+        {
+        AddId (i);
+        }
+    }
+
+//-----------------------------------------------------------------------------
+
+void BallClass::Physics ()
     {
     x_ = x_ + vx_ * dt;
     y_ = y_ + vy_ * dt;
 
-    if (x_ + r_ > WinSizeX)
+    if (x_ + r_ > WinSizeX -1 )
         {
         vx_ = -vx_;
-        x_ = WinSizeX - r_;
+        x_ = WinSizeX - r_ - 1;
         score_ ++;
         }
-    if (y_ + r_ > WinSizeY)
+    if (y_ + r_ > WinSizeY - 1)
         {
         vy_ = -vy_;
-        y_ = WinSizeY - r_;
+        y_ = WinSizeY - r_ - 1;
         score_ ++;
         }
-    if (x_ - r_ < 200)
+    if (x_ - r_ < 201)
         {
         vx_ = -vx_;
-        x_ = r_ + 200;
+        x_ = r_ + 201;
         score_ ++;
         }
-    if (y_ - r_ < 0)
+    if (y_ - r_ < 1)
         {
         vy_ = -vy_;
-        y_ = r_;
+        y_ = r_ + 1;
         score_ ++;
         }
     }
@@ -206,7 +255,7 @@ void Manager::DrawAllBalls ()
 
 void Manager::DrawTable()
 	{
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < ((BallsNum_ < 10)? BallsNum_: 10); i++)
 		{
 		txSetColor (MyBalls_[i].color_, 4);
 		txSetFillColor (RGB(255, 255, 255));
@@ -222,6 +271,24 @@ void Manager::DrawTable()
 
 //-----------------------------------------------------------------------------
 
+void Manager::BallsCounter ()
+    {
+    if (GetAsyncKeyState (VK_UP))
+        {
+        BallsNum_++;
+        AddId (BallsNum_ - 1);
+        MyBalls_ [BallsNum_].ConstructNew ();
+        }
+    if (BallsNum_ > 5 && GetAsyncKeyState (VK_DOWN))
+        {
+        BallsNum_--;
+        MyBalls_ [BallsNum_].~BallClass ();
+        MyBalls_ [BallsNum_].score_ = 0;
+        }
+    }
+
+//-----------------------------------------------------------------------------
+
 void Manager::Run ()
 	{
 	PhysicsForAllBalls 	();
@@ -229,6 +296,7 @@ void Manager::Run ()
 
 	SelectionSort 		();
 	DrawTable 			();
+	BallsCounter        ();
 	}
 
 //-----------------------------------------------------------------------------

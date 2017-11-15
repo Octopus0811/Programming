@@ -10,10 +10,12 @@ class BallClass
 	int r_;
 
 	BallClass ();
+   ~BallClass ();
 
 	int id_, score_;
 	COLORREF color_;
 
+	void ConstructNew ();
 	void Physics ();
 	void DrawBall ();
 	};
@@ -28,11 +30,13 @@ class Manager
 	Manager ();
 
 	void PhysicsForAllBalls ();
-	void DrawAllBalls  ();
-	void AddId ();
-	void DrawTable ();
-	void SelectionSort ();
-	void Run ();
+	void DrawAllBalls       ();
+	void AddId              (int number);
+	void AddIdAll           ();
+	void DrawTable          ();
+	void SelectionSort      ();
+	void BallsCounter       ();
+	void Run                ();
 	};
 
 void Print          (BallClass MyBalls [], int BallsNum);
